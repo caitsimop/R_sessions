@@ -1,0 +1,101 @@
+---
+title: "Back to basics - R"
+author: "Caitlin Simopoulos"
+date: '2017-05-18'
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Some R basics...
+
+## Helpful R websites
+
+1. <http://www.r-tutor.com>
+
+2. <https://www.r-bloggers.com>
+
+3. <http://stackoverflow.com/documentation/r/topics> This one is cool and new!! 
+
+## R Studio
+
+I would recommend downloading [https://www.rstudio.com](https://www.rstudio.com). It's a better version of the R GUI. And when you become obsessed with VIM (you will, don't worry), you can set R Studio to VI mode and everything will be good in the world.
+
+## R Markdown
+
+This is an R Markdown document (markdown == "simplified" latex...). 
+I encourage you to write your "lab notes" for anything you do in R/python in this kind of document (BUT do as I say, not as I do!).
+R Markdown is based on ``Markdown'' which is used on a lot of websites (ahem..Reddit), and is used for all those README.md files you see on github.
+However...if you really like LaTeX, you can even call R in all TeX stuff using notation similar to R Markdown.
+For more details on using R Markdown see <http://rmarkdown.rstudio.com> and <https://gist.github.com/jeromyanglim/2716336>.
+
+[//]: P.S. this is how you comment your RMD!
+
+# Important and helpful R commands/functions
+
+As you might know, R is a statistical programming language, meaning, so it's gotta be good at math. R has a lot of great built in commands. For example, it can be used as a calculator:
+
+```{r, cache=TRUE}
+
+(sqrt(62527) + (67*3275)) / 8.2
+```
+Some examples of commands that I use every day:
+
+```{r}
+# setting your working directory
+
+#setwd("~/some/file/path") 
+
+# keep a seperate working directory for every project!
+
+# creating a vector
+x <- c(4,75,89,12, 9)
+y <- c(1:5)
+# set seed for reproducibility
+set.seed(123)
+# random, normally distributed of length 10
+z <- c(rnorm(5)) 
+# bind by columns, create matrix
+mat <- cbind(x,y,z)
+# dimensions of matrix
+dim(mat)
+
+# get column 2
+mat[,2]
+# get row 3
+mat[3,]
+```
+
+
+
+
+
+## Using data in R
+
+R has a lot of built-in datasets.
+You can access them like:
+
+```{r}
+data(cars)
+head(cars)
+data(iris)
+head(iris)
+```
+
+*PS. easy keyboard shortcut to inserting code chunks is Ctrl + Alt + I (OS X: Cmd + Option + I)*
+
+The interwebs also have a lot of R datasets you can play around with....
+
+```{r}
+library(data.table)
+mydat <- fread('http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat')
+head(mydat)
+```
+
+Finally, you can also import your own data...
+```{r, eval=FALSE}
+data <- read.csv("file/path/data.csv", row.names=1, 
+header=FALSE)
+# writing a csv is similar
+write.csv(data, file="~/file/path/2/write/data.csv", sep=",")
+```
