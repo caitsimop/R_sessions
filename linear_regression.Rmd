@@ -1,0 +1,228 @@
+---
+title: "Linear Regression"
+author: "Caitlin Simopoulos"
+date: '2017-05-17'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Some R info...
+
+This is an R Markdown document (markdown == "simplified" latex...). 
+I encourage you to write your "lab notes" for anything you do in R/python in this kind of document (BUT do as I say, not as I do!).
+It's also easy to take class notes in Markdown.
+AND finally, you can even call R in all TeX stuff using similar notation...
+For more details on using R Markdown see <http://rmarkdown.rstudio.com> and <https://gist.github.com/jeromyanglim/2716336>.
+
+[//]: P.S. this is how you comment your RMD!
+
+## Some useful R websites...
+
+<http://www.r-tutor.com>
+
+<https://www.r-bloggers.com>
+
+# Using datasets in R
+
+R has a lot of built-in datasets.
+You can access them like:
+
+```{r}
+data(cars)
+head(cars)
+data(iris)
+head(iris)
+```
+
+*PS. easy keyboard shortcut to inserting code chunks is Ctrl + Alt + I (OS X: Cmd + Option + I)*
+
+The interwebs also have a lot of R datasets you can play around with....
+
+```{r}
+library(data.table)
+mydat <- fread('http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat')
+head(mydat)
+```
+
+Finally, you can also import your own data...
+```{r, eval=FALSE}
+data <- read.csv("file/path/data.csv", row.names=1, header=FALSE)
+```
+
+# Linear regression
+Let's do some "simple" analysis, starting with linear regression. 
+
+## Quick review...
+Linear regression is a *supervised* machine learning technique.
+The model *learns* from known data in order to predict from currently unknown data.
+Researchers also use this technique to determine trends in their data.
+
+In short, linear regression explains the relationship between dependent (Y) and independent (X) variables (*i.e.* how does the values of Y change when X varies and other independent variables remain the same?).
+
+Simply, linear regression takes the linear equation of:
+
+$$ Y = mX + b $$
+But we're going to use it more like:
+
+$$ \hat{y_{i}} = \beta_{0} + \beta_{1}x_{i} + \epsilon$$
+
+where:
+
+$\hat{y_{i}} =$ predicted response for expeimental unit $ i$,
+
+$x_{i} =$ predictor (or independent variable) of experimental unit $i$
+
+$\beta_{0} =$ is expected value when $x_{i} = 0$
+
+$\beta_{1} =$ slope
+
+$\epsilon =$ some error, because models are never perfect! 
+
+$\beta_{0}$ and $\beta_{1}$ are unknown, but are estimated from our training data! To do this, we must determine a line of best fit in some data that minimizes error.
+
+## An example: Does head size predict brain size?
+
+Let's use some real data to create a linear regession, and use it to make some predictions.
+We've already imported this data...but let's re-do it.
+
+```{r, cache=TRUE}
+library(data.table) 
+# we've already loaded this package...
+head_brain <- fread('http://www.stat.ufl.edu/~winner/data/brainhead.dat')
+head(head_brain)
+```
+Columns are:
+
+1. gender (1 = male, 2 = female)
+2. age (1 = 20-46, 2 = 46+)
+3. head size ($cm^{3}$)
+4. brain weight (g)
+
+```{r, cach=TRUE}
+# name columns to reflect what they are 
+colnames(head_brain) = c("gender", "age", "head", "brain")
+```
+
+Ok, let's look at the data to see if a linear model looks reasonable...
+
+```{r, cache=TRUE}
+#attach(head_brain)
+plot(head_brain$head, head_brain$brain, main="Head size vs brain weight", xlab = "head size (cm^3)", ylab = "brain weight")
+
+```
+
+Looks pretty reasonable to me!! OK, let's estimate some coefficients!
+
+In this example let's see how well we can predict brain weight from head size.
+```{r, cache=TRUE}
+lm1 = lm(brain ~ head, data=head_brain)
+summary(lm1)
+plot(head_brain$head, head_brain$brain, main="Head size vs brain weight", xlab = "head size (cm^3)", ylab = "brain weight")
+abline(lm1, col="purple")
+```
+
+Our summary output gives us a lot of information:
+
+1. Our median of the residuals (errors) = -1.76
+2. The values of our coefficients (along with standard errors)
+3. $R^{2}$ (want closer to 1)
+4. p-values (yuck!)
+
+Instead of p-values, you should use confidence intervals
+
+```{r, cache=TRUE}
+confint(brain_lr, level=0.95) #95% confidence interval
+# we are 95% confident that the intercept coeffifient estimate ranges between 232.7 and 418.4
+# 
+```
+
+This is great and all...but we have more information than what we've given our model, like gender and age categories of the individuals. 
+Does this information help with the analysis?
+
+### Multiple linear regression
+
+We can include our gender and age information in our anaylsis after tweaking the data just a bit.
+While we can input our data as-is, it's better to get into the habit of changing binary variables to 0 and 1 --- our data is currently 1 and 2.
+We can use the very useful ifelse() function.
+
+```{r, cache=TRUE}
+head_brain$gender = as.factor(ifelse(head_brain$gender == 1, 1, 0))
+# if head_brain$gender[i] == 1
+#     head_brain$gender[i] == 1
+# else
+#     head_brain$gender[i] == 0
+head_brain$age = as.factor(ifelse(head_brain$age == 1, 1, 0))
+```
+
+Let's see if age category has an effect on predicting brain weight from head size...
+We have some options on possible formulas for the linear regression:
+
+* brain ~ head + age
+* brain ~ head:age 
+* brain ~ head*age = brain ~ head + age + head x age
+
+```{r, cache=TRUE}
+lm2 = lm(brain ~ head + age, data=head_brain)
+lm3 = lm(brain ~ head * age, data=head_brain)
+lm4 = lm(brain ~ head:age, data=head_brain)
+```
+
+
+**Exercise** 
+How do these models perform individually? 
+How do these models perform when compared to each other?
+Hint: you can use the anova()....
+
+
+Do these models meet assumptions of the linear model?
+```{r}
+par(mfrow=c(2,2)) 
+plot(lm1)
+```
+
+#### Residuals vs. Fitted
+
+Looking for residuals to be randomly distributed around 0.
+
+#### Q-Q plot
+
+Q-Q plot can be used to look for normality. We want the points to follow the diagonal line.
+
+#### Scale-Location plot
+
+Similar to residuals vs fitted.
+
+#### Residuals vs. Leverage plot
+
+Was our model driven by outliers? If it was, Cook's distance lines would be visible (they aren't right now), and data points driving the model would be labeled. If this happens, try removing the outliers. 
+
+*PS. [http://data.library.virginia.edu/diagnostic-plots/](this website) is helpful for interpretting these plots.*
+
+### Predictions
+
+OK cool..but how do we predict from these linear models?
+
+Let's say we have some new head size data, and we want to use it to predict brain sizes.
+
+```{r, cache=TRUE}
+
+new_data = data.frame(gender = as.factor(c(1,1,0,0)), age =as.factor(c(0,1,0,1)), head = c(2265, 999, 2775, 9275))
+print(new_data)
+new_data$lm1 <- predict(lm1,newdata=new_data,type="response")
+new_data$lm2 <- predict(lm2,newdata=new_data,type="response")
+new_data$lm3 <- predict(lm3,newdata=new_data,type="response")
+new_data$lm4 <- predict(lm4,newdata=new_data,type="response")
+print(new_data)
+```
+
+Now, we've used our model to predict! Very cool! But, the predictions from the models vary...so how do we know which predictions are better? We should evaluate our models using our training data.
+
+**Exercise**
+How can you evaluate models using training data?
+Hint: you might need to subset the training data....
+
+# Acknowledgements
+This document was inspired by: [this tutorial](https://rstudio-pubs-static.s3.amazonaws.com/163576_2f7830d4ff104931bca800b4b5eb1ec0.html)

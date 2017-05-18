@@ -1,0 +1,16 @@
+---
+title: "Back to basics - R"
+author: "Caitlin Simopoulos"
+date: '2017-05-18'
+output: html_document
+---
+
+# Some R basics...
+
+## Helpful R websites
+
+1. <http://www.r-tutor.com>
+
+2. <https://www.r-bloggers.com>
+
+3. <http://stackoverflow.com/documentation/r/topics> This one is cool and new!! 
