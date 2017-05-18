@@ -1,0 +1,26 @@
+---
+title: "PCA"
+author: "Caitlin Simopoulos"
+date: '2017-05-18'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Principal Component Analysis
+Principal Component Analysis (PCA) is one of many methods commonly used to describe patterns in data. PCA is especially useful when analyzing gene expression data as it reduces the data’s dimensionality by projecting it onto “components”, and also summarizes the important features of the data (as the components maximize the variance of the data).
+
+[//]: Here is a [this explanation](https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues).  
+
+
+
+## Iris data PCA
+
+## RNASeq data PCA
+
+### Quick intro to ggplot!
+
+
+
