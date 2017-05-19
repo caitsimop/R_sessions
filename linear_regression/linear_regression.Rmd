@@ -2,7 +2,9 @@
 title: "Linear Regression"
 author: "Caitlin Simopoulos"
 date: '2017-05-17'
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -94,7 +96,7 @@ Our summary output gives us a lot of information:
 Instead of p-values, you should use confidence intervals
 
 ```{r, cache=TRUE}
-confint(brain_lr, level=0.95) #95% confidence interval
+confint(lm1, level=0.95) #95% confidence interval
 # we are 95% confident that the intercept coeffifient estimate ranges between 232.7 and 418.4
 # 
 ```

@@ -208,7 +208,88 @@ head(mydat)</code></pre>
 ## 5:  5 307 1010 37.23  0
 ## 6:  6 307 1020 37.24  0</code></pre>
 <p>Finally, you can also import your own data…</p>
-<pre class="r"><code>data &lt;- read.csv(&quot;file/path/data.csv&quot;, row.names=1, header=FALSE)</code></pre>
+<pre class="r"><code>data &lt;- read.csv(&quot;file/path/data.csv&quot;, row.names=1, 
+header=FALSE)
+# writing a csv is similar
+write.csv(data, file=&quot;~/file/path/2/write/data.csv&quot;, sep=&quot;,&quot;)</code></pre>
+</div>
+<div id="installingloading-packages" class="section level2">
+<h2>Installing/loading packages</h2>
+<p>There are 2 main locations for R packages that you’ll be using: CRAN and <a href="http://www.bioconductor.org">Bioconductor</a>.</p>
+<pre class="r"><code>#install.packages('ggplot2') #notice the quotes!
+library(ggplot2) # notice NO quotes!
+
+source(&quot;https://bioconductor.org/biocLite.R&quot;)</code></pre>
+<pre><code>## Bioconductor version 3.4 (BiocInstaller 1.24.0), ?biocLite for help</code></pre>
+<pre><code>## A new version of Bioconductor is available after installing the most
+##   recent version of R; see http://bioconductor.org/install</code></pre>
+<pre class="r"><code>biocLite() # this installs/updates bioconductor</code></pre>
+<pre><code>## BioC_mirror: https://bioconductor.org</code></pre>
+<pre><code>## Using Bioconductor 3.4 (BiocInstaller 1.24.0), R 3.3.2 (2016-10-31).</code></pre>
+<pre><code>## Old packages: 'AnnotationDbi', 'assertthat', 'backports', 'boot',
+##   'cluster', 'curl', 'data.table', 'DBI', 'dendextend', 'devtools',
+##   'digest', 'flexmix', 'foreign', 'Hmisc', 'htmlTable', 'htmltools',
+##   'IRanges', 'irlba', 'jsonlite', 'knitr', 'kohonen', 'lattice', 'lme4',
+##   'markdown', 'MASS', 'Matrix', 'matrixStats', 'mclust', 'memoise',
+##   'mgcv', 'mvtnorm', 'nlme', 'quantreg', 'R6', 'Rcpp', 'RcppEigen',
+##   'readr', 'rpart', 'RSQLite', 'S4Vectors', 'SparseM', 'stringi',
+##   'stringr', 'survival', 'tidyr', 'viridis'</code></pre>
+<pre class="r"><code>biocLite('WGCNA') # this will install packages, notice the quotes</code></pre>
+<pre><code>## BioC_mirror: https://bioconductor.org</code></pre>
+<pre><code>## Using Bioconductor 3.4 (BiocInstaller 1.24.0), R 3.3.2 (2016-10-31).</code></pre>
+<pre><code>## Installing package(s) 'WGCNA'</code></pre>
+<pre><code>## 
+## The downloaded binary packages are in
+##  /var/folders/mt/s0xh0kjd1n99lx7bxwck_v080000gn/T//Rtmpxt3tRe/downloaded_packages</code></pre>
+<pre><code>## Old packages: 'AnnotationDbi', 'assertthat', 'backports', 'boot',
+##   'cluster', 'curl', 'data.table', 'DBI', 'dendextend', 'devtools',
+##   'digest', 'flexmix', 'foreign', 'Hmisc', 'htmlTable', 'htmltools',
+##   'IRanges', 'irlba', 'jsonlite', 'knitr', 'kohonen', 'lattice', 'lme4',
+##   'markdown', 'MASS', 'Matrix', 'matrixStats', 'mclust', 'memoise',
+##   'mgcv', 'mvtnorm', 'nlme', 'quantreg', 'R6', 'Rcpp', 'RcppEigen',
+##   'readr', 'rpart', 'RSQLite', 'S4Vectors', 'SparseM', 'stringi',
+##   'stringr', 'survival', 'tidyr', 'viridis'</code></pre>
+<pre class="r"><code>library(WGCNA)</code></pre>
+<pre><code>## Loading required package: dynamicTreeCut</code></pre>
+<pre><code>## Loading required package: fastcluster</code></pre>
+<pre><code>## 
+## Attaching package: 'fastcluster'</code></pre>
+<pre><code>## The following object is masked from 'package:stats':
+## 
+##     hclust</code></pre>
+<pre><code>## </code></pre>
+<pre><code>## ==========================================================================
+## *
+## *  Package WGCNA 1.51 loaded.
+## *
+## *    Important note: It appears that your system supports multi-threading,
+## *    but it is not enabled within WGCNA in R. 
+## *    To allow multi-threading within WGCNA with all available cores, use 
+## *
+## *          allowWGCNAThreads()
+## *
+## *    within R. Use disableWGCNAThreads() to disable threading if necessary.
+## *    Alternatively, set the following environment variable on your system:
+## *
+## *          ALLOW_WGCNA_THREADS=&lt;number_of_processors&gt;
+## *
+## *    for example 
+## *
+## *          ALLOW_WGCNA_THREADS=4
+## *
+## *    To set the environment variable in linux bash shell, type 
+## *
+## *           export ALLOW_WGCNA_THREADS=4
+## *
+## *     before running R. Other operating systems or shells will
+## *     have a similar command to achieve the same aim.
+## *
+## ==========================================================================</code></pre>
+<pre><code>## 
+## Attaching package: 'WGCNA'</code></pre>
+<pre><code>## The following object is masked from 'package:stats':
+## 
+##     cor</code></pre>
 </div>
 </div>
 

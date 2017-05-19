@@ -1,7 +1,7 @@
 base
-methods
-datasets
-utils
-grDevices
-graphics
-stats
+data.table
+ggplot2
+BiocInstaller
+dynamicTreeCut
+fastcluster
+WGCNA

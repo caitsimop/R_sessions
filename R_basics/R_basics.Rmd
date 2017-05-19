@@ -68,8 +68,6 @@ mat[3,]
 
 
 
-
-
 ## Using data in R
 
 R has a lot of built-in datasets.
@@ -99,3 +97,21 @@ header=FALSE)
 # writing a csv is similar
 write.csv(data, file="~/file/path/2/write/data.csv", sep=",")
 ```
+
+## Installing/loading packages
+
+There are 2 main locations for R packages that you'll be using: CRAN and [Bioconductor](http://www.bioconductor.org).
+
+Supress this output!!
+
+```{r, cache=TRUE}
+
+#install.packages('ggplot2') #notice the quotes!
+library(ggplot2) # notice NO quotes!
+
+source("https://bioconductor.org/biocLite.R")
+biocLite() # this installs/updates bioconductor
+biocLite('WGCNA') # this will install packages, notice the quotes
+library(WGCNA)
+```
+
