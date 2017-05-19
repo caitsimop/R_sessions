@@ -1,0 +1,47 @@
+---
+title: "R and the command line, and Sweave"
+author: "Caitlin Simopoulos"
+date: '2017-05-19'
+output: html_document
+highlight: pygments
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Command line
+
+While R Studio is great for learning R, sometimes you just want to write some code and let it run.
+I like to call this "time to leave early", or "time for an extended coffee break".
+You can also write code in any text editor you want (VI, R Studio, Atom, SublimeTest...) and run your code similar to how you would run python/perl.
+To run your code you can use a command like:
+
+```{r, engine = 'bash', eval = FALSE}
+R --vanilla < yourRScript.R > yourOutfile.out
+
+# --vanilla starts R fresh
+# yourOutfile.out is everything that would normally print out on the console, good for debugging
+```
+
+## Some key functions...
+
+Because you're not interactively using R, you will need to be printing, writing CSVs, and saving R objects often. 
+I think one of my favourite things to do, especially when working with large files that take a long time to do anything to, is using R's save() function.
+You can either save a single, or subset of objects using save(), or can save your entire workspace using save.image(). 
+Conventionally, we save these images as ".RData" files.
+```{r, cache=TRUE, echo=FALSE}
+setwd("~/Dropbox/R_teaching/R_basics/")
+```
+
+```{r, cache=TRUE}
+# let's say you wanted to run something overnight, and then wanted to access the results IN R, without having to save it as a CSV.
+
+data(iris)
+pca <- prcomp(iris[,1:4])
+save(pca, file="iris_pca.RData")
+save.image(file="everything.RData")
+load("everything.RData") # literally everything that's in your workspace will be saved...you don't always need this!
+
+```
+

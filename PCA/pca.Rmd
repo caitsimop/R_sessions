@@ -10,17 +10,89 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Principal Component Analysis
-Principal Component Analysis (PCA) is one of many methods commonly used to describe patterns in data. PCA is especially useful when analyzing gene expression data as it reduces the data’s dimensionality by projecting it onto “components”, and also summarizes the important features of the data (as the components maximize the variance of the data).
+Principal Component Analysis (PCA) is one of many methods commonly used to describe patterns in data. PCA is especially useful when analyzing gene expression data as it reduces the data’s dimensionality by projecting it onto “components”, and also summarizes the important features of the data (as the components maximize the variance of the data). In short, PCA summarizes your data by reducing the number of variables by identifying a smaller number of uncorrelated components.
 
-[//]: Here is a [this explanation](https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues).  
+I typically use this as a check to make sure my RNASeq data makes sense, as when you plot the components, your conditions should all cluster together.
 
+[This is probably a better explanation...](http://setosa.io/ev/principal-component-analysis/).
 
 
 ## Iris data PCA
+To try out PCA, let's use a classic built-in R data: the iris dataset. 
+This dataset gives us qualitative information on 3 species of irises (setosa, versicolor, and virginica). It includes:
+
+- Sepal length
+- Sepal width
+- Petal length
+- Petal width
+
+
+```{r, cache=TRUE}
+
+data("iris")
+table(iris$Species)
+
+# Plotting all features against each other would take a lot of time...
+plot.colors <- c("gold", "purple", "blue")
+plot(iris$Sepal.Length, iris$Petal.Width, col=plot.colors[unclass(iris$Species)], ylab = "Petal widtch", xlab= "Sepal length", pch=19)
+legend("topleft", pch=19, col=plot.colors, legend=unique(iris$Species))
+
+
+```
+
+Hmm...it looks like the species cluster pretty well when just looking at 2 dimensions...but what if we combine all dimensions? 
+
+```{r, cache=TRUE}
+pairs(iris[,1:4], pch = 21, bg = plot.colors[unclass(iris$Species)])
+```
+
+Now, imagine trying to figure this out for an RNASeq project with data from 30,000 genes and 50 experiments... 
+
+### Actually completing PCA
+
+
+```{r, cache=TRUE}
+
+pca<- prcomp(iris[1:4], center=TRUE, scale=TRUE)  # PCA with centering and scaling
+pca$rotation  # The loadings are here
+summary(pca)
+plot(pca, type = "l")
+biplot(pca)
+```
+
+But this is really ugly and uninformative (which points are from which species is not obvious) ...and it's pretty hard to make a nicer plot in base R. So, let's make one in ggplot!
+
+### _Quick_ intro to ggplot!
+ggplot is a super flexible, super sleek plotting package for R and is typically used in combination with the other packages of the "tidyverse" --- plyr, dplyr, and reshape2. ggplot requires data to be shaped in the "long" format (i.e. 1 row per observation per feature).
+
+There is much too much to discuss about ggplot than there is time for in this quick intro...and I am just learning the 'tidyverse' myself, so we won't go into too much detail. If you'd like more information on any tidyverse packages, [check this out](http://tidyverse.org).
+
+Anyway, back to making a better PCA biplot. First, we have to make a data.frame with all variables needed for the plot. 
+
+```{r, cache = TRUE}
+library(ggplot2)
+indVals<-data.frame(pca$x)
+varVals<-data.frame(pca$rotation)
+dim(indVals) 
+dim(varVals)
+
+species <- iris$Species
+ 
+
+## extrating all PCA data for ggplot
+coords<-data.frame(X=rep(0, 4), Y=rep(0, 4), varVals)
+indVals <- cbind(indVals, Species= iris$Species)
+pc12plot <- ggplot(indVals, aes(x=PC1, y=PC2)) +
+          geom_point(aes(color = Species, size=3)) +
+  theme_bw()
+print(pc12plot)
+
+```
+
 
 ## RNASeq data PCA
 
-### Quick intro to ggplot!
+
 
 
 

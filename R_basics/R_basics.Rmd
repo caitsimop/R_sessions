@@ -19,21 +19,23 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## R Studio
 
-I would recommend downloading [https://www.rstudio.com](https://www.rstudio.com). It's a better version of the R GUI. And when you become obsessed with VIM (you will, don't worry), you can set R Studio to VI mode and everything will be good in the world.
+I would recommend downloading [https://www.rstudio.com](https://www.rstudio.com). It's a better version of the R GUI. And when you become obsessed with VIM (you will, don't worry), you can set R Studio to VI mode and all will be good in the world.
 
 ## R Markdown
 
 This is an R Markdown document (markdown == "simplified" latex...). 
 I encourage you to write your "lab notes" for anything you do in R/python in this kind of document (BUT do as I say, not as I do!).
 R Markdown is based on ``Markdown'' which is used on a lot of websites (ahem..Reddit), and is used for all those README.md files you see on github.
-However...if you really like LaTeX, you can even call R in all TeX stuff using notation similar to R Markdown.
+In R Markdown, you can "knit" output to PDF, HTML and Word documents.
+
+However...if you really like LaTeX, you can call R in all TeX stuff using notation similar to R Markdown using Sweave (this can be really useful when making presentations in beamer).
 For more details on using R Markdown see <http://rmarkdown.rstudio.com> and <https://gist.github.com/jeromyanglim/2716336>.
 
 [//]: P.S. this is how you comment your RMD!
 
 # Important and helpful R commands/functions
 
-As you might know, R is a statistical programming language, meaning, so it's gotta be good at math. R has a lot of great built in commands. For example, it can be used as a calculator:
+As you might know, R is a statistical programming language, meaning, it's gotta be good at math. R has a lot of great built in commands. For example, it can be used as a calculator:
 
 ```{r, cache=TRUE}
 
@@ -80,7 +82,7 @@ data(iris)
 head(iris)
 ```
 
-*PS. easy keyboard shortcut to inserting code chunks is Ctrl + Alt + I (OS X: Cmd + Option + I)*
+*PS. easy keyboard shortcut to inserting code chunks in R Markdown is Ctrl + Alt + I (OS X: Cmd + Option + I)*
 
 The interwebs also have a lot of R datasets you can play around with....
 
@@ -100,18 +102,35 @@ write.csv(data, file="~/file/path/2/write/data.csv", sep=",")
 
 ## Installing/loading packages
 
-There are 2 main locations for R packages that you'll be using: CRAN and [Bioconductor](http://www.bioconductor.org).
+There are 2 main locations for R packages that you'll be using: [CRAN](https://cran.r-project.org) and [Bioconductor](http://www.bioconductor.org).
+Bioconductor has more "bioinformatic"-y packages. 
 
-Supress this output!!
-
-```{r, cache=TRUE}
-
-#install.packages('ggplot2') #notice the quotes!
+```{r, eval=FALSE}
+# Installing from CRAN
+install.packages('ggplot2') #notice the quotes!
 library(ggplot2) # notice NO quotes!
 
+
+# Installing from Bioconductor
 source("https://bioconductor.org/biocLite.R")
 biocLite() # this installs/updates bioconductor
 biocLite('WGCNA') # this will install packages, notice the quotes
 library(WGCNA)
 ```
+
+### But what if you don't know how to use the packages...
+
+R Packages come with PDFs and help files. The good packages come with full-blown tutorials. One of the best things about these help files is that, as long as you've installed the package, they are stored locally and do not require internet access. To access these files you can:
+
+```{r, eval=FALSE}
+library(ggplot2)
+?ggplot
+help(ggplot)
+vignette("parallel")
+
+## What if you need a function, but forget what package it's in?
+
+??predict #"??"" searches R help files!
+```
+
 
