@@ -26,9 +26,9 @@ I would recommend downloading [https://www.rstudio.com](https://www.rstudio.com)
 This is an R Markdown document (markdown == "simplified" latex...). 
 I encourage you to write your "lab notes" for anything you do in R/python in this kind of document (BUT do as I say, not as I do!).
 R Markdown is based on ``Markdown'' which is used on a lot of websites (ahem..Reddit), and is used for all those README.md files you see on github.
-In R Markdown, you can "knit" output to PDF, HTML and Word documents.
+In R Markdown, you can knit output to PDF, HTML and Word documents.
 
-However...if you really like LaTeX, you can call R in all TeX stuff using notation similar to R Markdown using Sweave (this can be really useful when making presentations in beamer).
+However...if you really like LaTeX, you can call R in all TeX stuff using notation similar to R Markdown (this can be really useful when making presentations in beamer).
 For more details on using R Markdown see <http://rmarkdown.rstudio.com> and <https://gist.github.com/jeromyanglim/2716336>.
 
 [//]: P.S. this is how you comment your RMD!
@@ -50,7 +50,7 @@ Some examples of commands that I use every day:
 
 # keep a seperate working directory for every project!
 
-# creating a vector
+# creating and assignming a vector to a variable
 x <- c(4,75,89,12, 9)
 y <- c(1:5)
 # set seed for reproducibility
@@ -133,4 +133,6 @@ vignette("parallel")
 ??predict #"??"" searches R help files!
 ```
 
+## Plotting (you don't need ggplot2!)
 
+You can use R to create basic plots

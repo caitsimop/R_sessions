@@ -1,5 +1,5 @@
 ---
-title: "R and the command line, and Sweave"
+title: "R and the command line, sweave, extras..."
 author: "Caitlin Simopoulos"
 date: '2017-05-19'
 output: html_document
@@ -42,6 +42,15 @@ pca <- prcomp(iris[,1:4])
 save(pca, file="iris_pca.RData")
 save.image(file="everything.RData")
 load("everything.RData") # literally everything that's in your workspace will be saved...you don't always need this!
+
+```
+
+# More advanced useful functions
+
+```{r, eval=FALSE}
+
+which()
+ifelse()
 
 ```
 
