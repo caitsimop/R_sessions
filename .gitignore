@@ -1,3 +1,6 @@
+# Random files
+.DS_Store
+
 # History files
 .Rhistory
 .Rapp.history
@@ -31,3 +34,10 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+
+# Other stuff I dont want on github
+*_cache
+*_files
+*/beamer
+*/figure-beamer
+
