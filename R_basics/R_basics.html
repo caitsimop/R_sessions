@@ -150,11 +150,7 @@ $(document).ready(function () {
 <pre class="r"><code>(sqrt(62527) + (67*3275)) / 8.2</code></pre>
 <pre><code>## [1] 26789.64</code></pre>
 <p>Some examples of commands that I use every day:</p>
-<pre class="r"><code># setting your working directory
-
-#setwd(&quot;~/some/file/path&quot;) 
-
-# keep a seperate working directory for every project!
+<pre class="r"><code># keep a seperate working directory for every project!
 
 # creating and assignming a vector to a variable
 x &lt;- c(4,75,89,12, 9)
@@ -163,9 +159,24 @@ y &lt;- c(1:5)
 set.seed(123)
 # random, normally distributed of length 10
 z &lt;- c(rnorm(5)) 
+
 # bind by columns, create matrix
 mat &lt;- cbind(x,y,z)
-# dimensions of matrix
+# bind by rows, create matrix
+mat2 &lt;- rbind(x,y,z)
+print(mat)</code></pre>
+<pre><code>##       x y           z
+## [1,]  4 1 -0.56047565
+## [2,] 75 2 -0.23017749
+## [3,] 89 3  1.55870831
+## [4,] 12 4  0.07050839
+## [5,]  9 5  0.12928774</code></pre>
+<pre class="r"><code>print(mat2)</code></pre>
+<pre><code>##         [,1]       [,2]      [,3]        [,4]      [,5]
+## x  4.0000000 75.0000000 89.000000 12.00000000 9.0000000
+## y  1.0000000  2.0000000  3.000000  4.00000000 5.0000000
+## z -0.5604756 -0.2301775  1.558708  0.07050839 0.1292877</code></pre>
+<pre class="r"><code># dimensions of matrix
 dim(mat)</code></pre>
 <pre><code>## [1] 5 3</code></pre>
 <pre class="r"><code># get column 2
@@ -175,6 +186,13 @@ mat[,2]</code></pre>
 mat[3,]</code></pre>
 <pre><code>##         x         y         z 
 ## 89.000000  3.000000  1.558708</code></pre>
+<div id="important-note" class="section level2">
+<h2>Important note</h2>
+<p>Get into the habit of having a seperate working directory for every project. Nothing makes me cringe more than helping someone and seeing them use their Desktop as their working directory for EVERYTHING. Create a file folder/directory for each project to stay organised!</p>
+<pre class="r"><code># setting your working directory
+
+setwd(&quot;~/some/file/path&quot;) </code></pre>
+</div>
 <div id="using-data-in-r" class="section level2">
 <h2>Using data in R</h2>
 <p>R has a lot of built-in datasets. You can access them like:</p>
@@ -240,8 +258,8 @@ vignette(&quot;parallel&quot;)
 ??predict #&quot;??&quot;&quot; searches R help files!</code></pre>
 </div>
 </div>
-<div id="plotting-you-dont-need-ggplot2" class="section level2">
-<h2>Plotting (you don’t need ggplot2!)</h2>
+<div id="plotting-you-dont-need-ggplot" class="section level2">
+<h2>Plotting (you don’t need ggplot!)</h2>
 <p>You can use R to create basic plots</p>
 </div>
 </div>

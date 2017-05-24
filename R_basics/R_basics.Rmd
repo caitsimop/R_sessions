@@ -37,17 +37,16 @@ For more details on using R Markdown see <http://rmarkdown.rstudio.com> and <htt
 
 As you might know, R is a statistical programming language, meaning, it's gotta be good at math. R has a lot of great built in commands. For example, it can be used as a calculator:
 
-```{r, cache=TRUE}
+```{r}
 
 (sqrt(62527) + (67*3275)) / 8.2
 ```
+
+
+
 Some examples of commands that I use every day:
 
 ```{r}
-# setting your working directory
-
-#setwd("~/some/file/path") 
-
 # keep a seperate working directory for every project!
 
 # creating and assignming a vector to a variable
@@ -57,8 +56,13 @@ y <- c(1:5)
 set.seed(123)
 # random, normally distributed of length 10
 z <- c(rnorm(5)) 
+
 # bind by columns, create matrix
 mat <- cbind(x,y,z)
+# bind by rows, create matrix
+mat2 <- rbind(x,y,z)
+print(mat)
+print(mat2)
 # dimensions of matrix
 dim(mat)
 
@@ -67,7 +71,14 @@ mat[,2]
 # get row 3
 mat[3,]
 ```
+## Important note
 
+Get into the habit of having a seperate working directory for every project. Nothing makes me cringe more than helping someone and seeing them use their Desktop as their working directory for EVERYTHING. Create a file folder/directory for each project to stay organised!
+```{r, eval=FALSE}
+# setting your working directory
+
+setwd("~/some/file/path") 
+```
 
 
 ## Using data in R
@@ -133,6 +144,6 @@ vignette("parallel")
 ??predict #"??"" searches R help files!
 ```
 
-## Plotting (you don't need ggplot2!)
+## Plotting (you don't need ggplot!)
 
 You can use R to create basic plots
