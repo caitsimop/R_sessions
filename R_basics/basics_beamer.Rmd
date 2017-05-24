@@ -157,8 +157,11 @@ mat[,2]
 mat[3,]
 ## You can also use boolean operators for 
 ## grabbing indice (TRUE/FALSE)
-newDF <- data.frame(hello=x, weird=y, fun=z)
+newDF <- data.frame(hello=x, weird=y,
+  fun=c("one", "two", "three", "four", "five"))
 print(newDF)
+which(newDF < 1)
+which(newDF$hello == 89)
 ```
 
 # Class and structure of data
@@ -251,14 +254,14 @@ vignette("parallel")
 R has great built-in plot functions...[examples](http://rstudio-pubs-static.s3.amazonaws.com/7953_4e3efd5b9415444ca065b1167862c349.html)
 
 \footnotesize
-```{r, cache=TRUE, fig.height=7}
+```{r, cache=TRUE, fig.height=6}
 data(iris)
 plot(iris$Sepal.Length, iris$Sepal.Width)
 ```
 
 # Simple plots (without ggplot2)
 \footnotesize
-```{r, cache=TRUE, fig.height=7}
+```{r, cache=TRUE, fig.height=6}
 data(iris)
 plot(iris$Sepal.Length, iris$Sepal.Width, 
      pch=10, col=iris$Species,

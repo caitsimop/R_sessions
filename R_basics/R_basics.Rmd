@@ -3,8 +3,8 @@ title: "Back to basics - R"
 author: "Caitlin Simopoulos"
 date: '2017-05-18'
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -79,6 +79,8 @@ mat[3,]
 # Data frames are similar to matrices, except you are easily able to mix data types 
 newDF <- data.frame(hello=x, weird=y, fun=c("one", "two", "three", "four", "five"))
 print(newDF)
+which(newDF < 1)
+which(newDF$hello == 89)
 ```
 
 Some fucntions only work on data with a certain structure of class. You can check your data's structure/class by:
