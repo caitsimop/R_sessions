@@ -2,7 +2,9 @@
 title: "Back to basics - R"
 author: "Caitlin Simopoulos"
 date: '2017-05-18'
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -38,11 +40,14 @@ For more details on using R Markdown see <http://rmarkdown.rstudio.com> and <htt
 As you might know, R is a statistical programming language, meaning, it's gotta be good at math. R has a lot of great built in commands. For example, it can be used as a calculator:
 
 ```{r}
+## Comment your code with number signs :)
 
 (sqrt(62527) + (67*3275)) / 8.2
+# assign variables with <-
+someNum <- (sqrt(62527) + (67*3275)) / 8.2
 ```
 
-
+For more information on why I use `<-` to assign variables instead of `=` (even though both will work...), see [this blog post](http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html).
 
 Some examples of commands that I use every day:
 
@@ -70,10 +75,27 @@ dim(mat)
 mat[,2]
 # get row 3
 mat[3,]
+
+# Data frames are similar to matrices, except you are easily able to mix data types 
+newDF <- data.frame(hello=x, weird=y, fun=c("one", "two", "three", "four", "five"))
+print(newDF)
 ```
+
+Some fucntions only work on data with a certain structure of class. You can check your data's structure/class by:
+
+```{r, eval=FALSE}
+str(mat) # gives structure information
+class(mat) # gives class information
+dataNum <- as.numeric(mat) 
+dataChar <- as.character(mat)
+df <- as.data.frame(mat)
+newMat <- as.matrix(newDF)
+```
+
 ## Important note
 
 Get into the habit of having a seperate working directory for every project. Nothing makes me cringe more than helping someone and seeing them use their Desktop as their working directory for EVERYTHING. Create a file folder/directory for each project to stay organised!
+
 ```{r, eval=FALSE}
 # setting your working directory
 
@@ -82,6 +104,12 @@ setwd("~/some/file/path")
 
 
 ## Using data in R
+
+There are 3 different ways you can use/find data in R
+
+1. Use built-in datasets
+2. Download them from the web
+3. Import your own CSVs
 
 R has a lot of built-in datasets.
 You can access them like:
@@ -146,4 +174,15 @@ vignette("parallel")
 
 ## Plotting (you don't need ggplot!)
 
-You can use R to create basic plots
+You can use R to create basic plots. You can still make them pretty, as we'll see during our linear regression session.
+
+```{r, cache=TRUE, fig.height=7}
+data(iris)
+plot(iris$Sepal.Length, iris$Sepal.Width)
+
+plot(iris$Sepal.Length, iris$Sepal.Width, 
+     pch=10, col=iris$Species,
+     xlab = "Sepal length", ylab = "Sepal width")
+
+boxplot(iris[,1:4])
+```

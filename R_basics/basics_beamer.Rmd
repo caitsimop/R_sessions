@@ -266,7 +266,7 @@ plot(iris$Sepal.Length, iris$Sepal.Width,
 ```
 
 # Simple plots (without ggplot2)
-```{r, fig.height=7}
+```{r, fig.height=6}
 boxplot(iris[,1:4])
 ```
 
