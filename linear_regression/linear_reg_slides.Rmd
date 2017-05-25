@@ -39,7 +39,7 @@ header-includes:
 - \newcommand{\colbegin}{\begin{columns}}
 - \newcommand{\colend}{\end{columns}}
 ---
-
+\footnotesize
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -48,13 +48,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Now that we've got the hang of some R commands, let's do some real analysis
 
-# Linear regression
-- explains the relationship between dependent (Y) and independent (X) variables 
+# Linear regression:
+- explains the linear relationship between dependent (Y) and independent (X) variables 
 - ``line of best fit'' to data
 - a ``simple'' linear regression is equivalent to a correlation
-- is a *supervised* machine learning technique
-  - the model learns from known data, and can be used to predict
-  - sometimes we are looking for trends and don't care about predictions
+- can be considered *supervised* machine learning technique ([see here](http://machinelearningmastery.com/linear-regression-for-machine-learning/))
+    - the model learns from known data, and can be used to predict
+    - sometimes we are looking for trends and don't care about predictions
   
 # Linear regression 
 
@@ -99,6 +99,7 @@ Columns are:
 3. head size ($cm^{3}$)
 4. brain weight (g)
 
+\footnotesize
 ```{r, cache=TRUE}
 # name columns to reflect what they are 
 colnames(head_brain) = c("gender", "age", "head", "brain")
@@ -107,6 +108,7 @@ colnames(head_brain) = c("gender", "age", "head", "brain")
 
 # Change data type 
 ```{r, cache=TRUE}
+head_brain <- as.data.frame(head_brain)
 head_brain$gender <- as.factor(head_brain$gender)
 head_brain$age <- as.factor(head_brain$age)
 head_brain$head <- as.numeric(head_brain$head)
@@ -118,7 +120,6 @@ head_brain$brain <- as.numeric(head_brain$brain)
 
 \footnotesize
 ```{r, cache=TRUE, fig.height=5}
-#attach(head_brain)
 plot(head_brain$head, head_brain$brain, 
      main="Head size vs brain weight", 
      xlab = "head size (cm^3)", ylab = "brain weight")
@@ -260,7 +261,9 @@ What if we are given new data, and want to make predictions from our models?
 
 \footnotesize
 ```{r, cache=TRUE}
-new_data = data.frame(gender = as.factor(c(1,1,0,0)), age = as.factor(c(0,1,0,1)), head = as.numeric(c(2265, 999, 2775, 9275)))
+new_data = data.frame(gender = as.factor(c(1,1,0,0)), 
+                      age = as.factor(c(0,1,0,1)), 
+                      head = as.numeric(c(2265, 999, 2775, 9275)))
 print(new_data)
 ```
 

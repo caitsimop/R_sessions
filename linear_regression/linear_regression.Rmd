@@ -3,8 +3,8 @@ title: "Linear Regression"
 author: "Caitlin Simopoulos"
 date: '2017-05-17'
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -59,8 +59,13 @@ Columns are:
 4. brain weight (g)
 
 ```{r, cache=TRUE}
-# name columns to reflect what they are 
+# name columns to reflect what they are, change data classes to match data 
 colnames(head_brain) = c("gender", "age", "head", "brain")
+head_brain <- as.data.frame(head_brain)
+head_brain$gender <- as.factor(head_brain$gender)
+head_brain$age <- as.factor(head_brain$age)
+head_brain$head <- as.numeric(head_brain$head)
+head_brain$brain <- as.numeric(head_brain$brain)
 ```
 
 Ok, let's look at the data to see if a linear model looks reasonable...
