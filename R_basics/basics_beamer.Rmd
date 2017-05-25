@@ -70,6 +70,12 @@ RStudio is a graphical interface for the R programming language. Essentially, it
 
 *Note:* I am over simplifying the software...there are many more things you can do.
 
+# R Studio
+
+\Large
+Let's take a tour of R studio....
+
+
 # R Markdown
 
 - This presentation in an R Markdown document
