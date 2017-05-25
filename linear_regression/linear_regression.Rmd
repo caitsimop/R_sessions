@@ -29,19 +29,14 @@ Simply, linear regression takes the linear equation of:
 $$ Y = mX + b $$
 But we're going to use it more like:
 
-$$ \hat{y_{i}} = \beta_{0} + \beta_{1}x_{i} + \epsilon$$
+$$ \hat{y_{i}} = \hat{\beta_{0}} + \hat{\beta_{1}}x_{i} + \epsilon_{i}$$
 
-where:
-
-$\hat{y_{i}} =$ predicted response for expeimental unit $ i$,
-
-$x_{i} =$ predictor (or independent variable) of experimental unit $i$
-
-$\beta_{0} =$ is expected value when $x_{i} = 0$
-
-$\beta_{1} =$ slope
-
-$\epsilon =$ some error, because models are never perfect! 
+where:  
+$\hat{y_{i}} =$ predicted response for expeimental unit $i$  
+$x_{i} =$ predictor (or independent variable) of experimental unit $i$  
+$\hat{\beta_{0}} =$ is expected value when $x_{i} = 0$ (intercept)  
+$\hat{\beta_{1}} =$ slope  
+$\epsilon =$ some error, because models are never perfect!  
 
 $\beta_{0}$ and $\beta_{1}$ are unknown, but are estimated from our training data! To do this, we must determine a line of best fit in some data that minimizes error.
 
@@ -63,7 +58,7 @@ Columns are:
 3. head size ($cm^{3}$)
 4. brain weight (g)
 
-```{r, cach=TRUE}
+```{r, cache=TRUE}
 # name columns to reflect what they are 
 colnames(head_brain) = c("gender", "age", "head", "brain")
 ```
@@ -72,7 +67,8 @@ Ok, let's look at the data to see if a linear model looks reasonable...
 
 ```{r, cache=TRUE}
 #attach(head_brain)
-plot(head_brain$head, head_brain$brain, main="Head size vs brain weight", xlab = "head size (cm^3)", ylab = "brain weight")
+plot(head_brain$head, head_brain$brain, 
+     main="Head size vs brain weight", xlab = "head size (cm^3)", ylab = "brain weight")
 
 ```
 
@@ -88,10 +84,15 @@ abline(lm1, col="purple")
 
 Our summary output gives us a lot of information:
 
-1. Our median of the residuals (errors) = -1.76
-2. The values of our coefficients (along with standard errors)
-3. $R^{2}$ (want closer to 1)
+1. Info about distrubution of residuals (errors)
+2. The estimates of our coefficients
+3. Standard error of coefficient estimates
+    - square root of the variance 
+      - $\sqrt{\sigma}^{2}$
+3. t-values (coefficient estimates/standard error)
+3. $R^{2}$ = (want closer to 1)
 4. p-values (yuck!)
+    - testing if your coefficient = 0
 
 Instead of p-values, you should use confidence intervals
 
@@ -120,23 +121,25 @@ head_brain$age = as.factor(ifelse(head_brain$age == 1, 1, 0))
 ```
 
 Let's see if age category has an effect on predicting brain weight from head size...
+
 We have some options on possible formulas for the linear regression:
-
 * brain ~ head + age
+    * $\hat{brain_{i}} = \hat{\beta_{0}} + \hat{\beta_{1}}head_{i} + \hat{\beta_{2}}age_{i} + \epsilon_{i}$
 * brain ~ head:age 
+    * $\hat{brain_{i}} = \hat{\beta_{0}} + \hat{\beta_{2}}age_{i}head_{i} + \epsilon_{i}$
 * brain ~ head*age = brain ~ head + age + head x age
-
+    * $\hat{brain_{i}} = \hat{\beta_{0}} + \hat{\beta_{1}}head_{i} + \hat{\beta_{2}}age_{i} + \hat{\beta_{2}}age_{i}head_{i} + \epsilon_{i}$
 ```{r, cache=TRUE}
 lm2 = lm(brain ~ head + age, data=head_brain)
-lm3 = lm(brain ~ head * age, data=head_brain)
-lm4 = lm(brain ~ head:age, data=head_brain)
+lm3 = lm(brain ~ head:age, data=head_brain)
+lm4 = lm(brain ~ head * age, data=head_brain)
 ```
+
 
 
 **Exercise** 
 How do these models perform individually? 
 How do these models perform when compared to each other?
-Hint: you can use the anova()....
 
 
 Do these models meet assumptions of the linear model?
@@ -173,14 +176,22 @@ Let's say we have some new head size data, and we want to use it to predict brai
 
 new_data = data.frame(gender = as.factor(c(1,1,0,0)), age =as.factor(c(0,1,0,1)), head = c(2265, 999, 2775, 9275))
 print(new_data)
-new_data$lm1 <- predict(lm1,newdata=new_data,type="response")
-new_data$lm2 <- predict(lm2,newdata=new_data,type="response")
-new_data$lm3 <- predict(lm3,newdata=new_data,type="response")
-new_data$lm4 <- predict(lm4,newdata=new_data,type="response")
-print(new_data)
+lm1_pred <- predict(lm1,newdata=new_data,
+                    interval="confidence", level=.95)
+lm2_pred <- predict(lm2,newdata=new_data,
+                    interval="confidence", level=.95)
+lm3_pred <- predict(lm3,newdata=new_data,
+                    interval="confidence", level=.95)
+lm4_pred<- predict(lm4,newdata=new_data,
+                   interval="confidence", level=.95)
+print(lm1_pred)
+print(lm2_pred)
+print(lm3_pred)
+print(lm4_pred)
 ```
-
 Now, we've used our model to predict! Very cool! But, the predictions from the models vary...so how do we know which predictions are better? We should evaluate our models using our training data.
+
+
 
 **Exercise**
 How can you evaluate models using training data?
