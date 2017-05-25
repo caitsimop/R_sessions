@@ -81,12 +81,12 @@ We will estimate these coefficients from known data.
 To do this, we need to estimate a line of best fit than minimizes error
 
 # An example: Does head size predict brain size?
-
 \footnotesize
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=TRUE, echo=TRUE}
 library(data.table) 
 # we've already loaded this package...
-head_brain <- fread('http://www.stat.ufl.edu/~winner/data/brainhead.dat')
+head_brain <- fread(
+  'http://www.stat.ufl.edu/~winner/data/brainhead.dat')
 head(head_brain)
 ```
 
