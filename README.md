@@ -1,7 +1,7 @@
 # R_sessions
 Informal R sessions for Golding and Weretilnyk labs!
 
-1. R Basics
+1. [R Basics](https://github.com/caitsimop/R_sessions/blob/master/R_basics/basics_beamer.pdf)
 - Getting data
 - Importing data
 - Writing CSVs
@@ -10,7 +10,7 @@ Informal R sessions for Golding and Weretilnyk labs!
 - Basic plotting
 - etc...
 
-2. Linear regression 
+2. [Linear regression](https://github.com/caitsimop/R_sessions/blob/master/linear_regression/linear_reg_slides.pdf) 
 - Quick review
 - Equations
 - More plotting
