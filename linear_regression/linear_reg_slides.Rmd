@@ -39,7 +39,6 @@ header-includes:
 - \newcommand{\colbegin}{\begin{columns}}
 - \newcommand{\colend}{\end{columns}}
 ---
-\footnotesize
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -109,6 +108,7 @@ colnames(head_brain) = c("gender", "age", "head", "brain")
 # Change data type 
 ```{r, cache=TRUE}
 head_brain <- as.data.frame(head_brain)
+
 head_brain$gender <- as.factor(head_brain$gender)
 head_brain$age <- as.factor(head_brain$age)
 head_brain$head <- as.numeric(head_brain$head)

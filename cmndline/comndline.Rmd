@@ -50,7 +50,10 @@ load("everything.RData") # literally everything that's in your workspace will be
 ```{r, eval=FALSE}
 
 which()
+# because who needs if else statements...
 ifelse()
-
+# for loops are so passe
+apply()
+lapply()
 ```
 
