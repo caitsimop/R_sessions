@@ -1,0 +1,198 @@
+---
+title: "Principal Component Analysis"
+author: "Caitlin Simopoulos"
+date: '2017-05-26'
+output:
+  beamer_presentation:
+    latex_engine: xelatex
+  ioslides_presentation: default
+subtitle: McMaster University
+header-includes:
+- \definecolor{Navy}{RGB}{3, 1, 44}
+- \definecolor{Purple}{RGB}{65, 34, 52}
+- \definecolor{PrettyGreen}{RGB}{47, 86, 75}
+- \definecolor{Pink}{RGB}{255, 105, 120}
+- \definecolor{OffWhite}{RGB}{255, 234, 208}
+- \colorlet{WhiteOffWhite}{OffWhite!95!white}
+- \definecolor{GreyWhite}{RGB}{255,234,208}
+- \definecolor{DarkPurple}{RGB}{51, 41, 56}
+- \definecolor{LightishPurple}{RGB}{109, 64, 87}
+- \definecolor{Pinky}{RGB}{229, 104, 97}
+- \definecolor{Robin}{RGB}{172, 229, 223}
+- \colorlet{DarkRobin}{Robin!80!black}
+- \colorlet{LightNavy}{Navy!50!white}
+- \setbeamercolor{title}{fg=DarkPurple}
+- \setbeamercolor{frametitle}{fg=white, bg=LightishPurple}
+- \setbeamercolor{normal text}{fg=DarkPurple}
+- \setbeamercolor{block title}{fg=white,bg=Pinky}
+- \setbeamercolor{block body}{fg=black,bg=Pinky!25!white}
+- \setbeamercolor{alerted text}{fg=Pinky}
+- \setbeamercolor{itemize item}{fg=DarkPurple}
+- \setbeamercolor{framesource}{fg=DarkRobin}
+- \setbeamercolor{section in toc}{fg=LightNavy}
+- \setbeamercolor{footnote}{fg=DarkPurple}
+- \setbeamercolor{footnote mark}{fg=DarkPurple}
+- \setbeamercolor{myfootlinetext}{fg=DarkPurple}
+- \setbeamertemplate{itemize subitem}{\color{DarkRobin}$\blacktriangleright$}
+- \setbeamertemplate{itemize subsubitem}{\color{DarkPurple}$\blacktriangleright$}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=Pinky}
+- \newcommand{\colbegin}{\begin{columns}}
+- \newcommand{\colend}{\end{columns}}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Principal Component Analysis:
+
+- describes patterns in data
+- is a way to reduce high dimensionality into fewer, linear components  
+   - principal components = uncorrelated variables  
+- helpful when looking at data with a lot of features  
+- [``goal is to explain the maximum amount of variance with the fewest number of principal components''](http://support.minitab.com/en-us/minitab/17/topic-library/modeling-statistics/multivariate/principal-components-and-factor-analysis/what-is-pca/)
+- commonly used in RNASeq QC, or for finding influencial genes 
+- [This is a great visual explanation of PCA](http://setosa.io/ev/principal-component-analysis/).
+
+
+# If this still isn't making any sense...
+
+[Read this](http://www.cs.otago.ac.nz/cosc453/student_tutorials/principal_components.pdf) if you like math.
+
+[Read this](https://www.quora.com/How-to-explain-PCA-in-laymans-terms) if you hate math. 
+
+# An example of PCA with gene expression data...
+
+![](figs/pc24_labelled.pdf)
+
+
+
+# Lots of features = difficult to interpret data
+
+- visualizing data is one of the best ways to share and interpret data
+- it's easy to plot and interpret 2D data...
+- 3D is possible, but harder...
+- 4D+ is very difficult, and will take a lot of time
+- let's use PCA on 4D data 
+
+
+# An example: iris data set
+
+```{r, cache=TRUE}
+
+data("iris")
+table(iris$Species)
+```
+
+# \normalsize Plotting all features against each other would take a lot of time...
+\tiny
+```{r, cache=TRUE, fig.height=6}
+plot.colors <- c("gold", "purple", "blue")
+plot(iris$Sepal.Length, iris$Petal.Width, col=plot.colors[unclass(iris$Species)],
+     ylab = "Petal widtch", xlab= "Sepal length", pch=19)
+legend("topleft", pch=19, col=plot.colors, legend=unique(iris$Species))
+```
+
+# Thankfully R has a built-in plotting feature for this
+\footnotesize
+```{r, cache=TRUE, fig.height=6}
+pairs(iris[,1:4], pch = 21, 
+      bg = plot.colors[unclass(iris$Species)])
+```
+
+# Imagine doing this with more than 4 features...
+
+Like with an RNASeq project with data from 30,000 genes and 50 different samples...yuck
+
+
+# Let's do PCA instead
+\footnotesize
+```{r, cache=TRUE}
+pca<- prcomp(iris[1:4], center=TRUE, scale=TRUE)  # PCA with centering and scaling
+pca$rotation  # The loadings are here
+summary(pca)
+```
+
+# How much varience is described by each component?
+```{r, fig.height=6}
+plot(pca, type = "l")
+```
+
+# Visualizing PC1 vs PC2
+```{r}
+biplot(pca)
+```
+
+# Hmm... 
+
+What do you think of this plot?
+
+# ggplot2 to the rescue! 
+
+- ggplot2 is a super flexible, super sleek plotting package for R
+- used in combination with other packages of the [``tidyverse''](http://tidyverse.org)
+- ggplot2 requires data in long format  
+      - 1 row per observation per feature
+
+# 1. Make data.frame for PCA variables
+ \footnotesize
+```{r}
+#components
+indVals<-data.frame(pca$x)
+# variables
+varVals<-data.frame(pca$rotation)
+dim(indVals) 
+dim(varVals)
+## extrating all PCA data for ggplot
+coords<-data.frame(X=rep(0, 4), Y=rep(0, 4), varVals, 
+                   feature = colnames(iris[1:4]))
+indVals <- cbind(indVals, Species= iris$Species)
+```
+# Plot PC1 vs PC2
+\footnotesize
+```{r, fig.height=4}
+library(ggplot2)
+pc12plot <- ggplot(data = indVals, aes(x=PC1, y=PC2)) +
+  geom_point(aes(color = Species), alpha=0.5) +
+  geom_segment(data=coords, aes(x=X, y=Y, xend=PC2, yend=PC4,
+  colour=colnames(iris[1:4])), arrow=arrow(), size=1)  +
+theme_bw()     
+print(pc12plot)  
+```
+
+# Plot PC1 vs PC2
+\footnotesize
+```{r, fig.height=4}
+pc12plot <- ggplot(data = indVals, aes(x=PC1, y=PC2)) +
+   geom_point(aes(color = Species), alpha=0.5) +
+   geom_point(data=coords, aes(x=PC1, y=PC2)) +
+   geom_text(data = coords, aes(x=PC1, y=PC2,
+   label=feature),hjust=1, vjust=1) +
+   theme_bw()
+print(pc12plot)
+```
+
+# Plot PC1 vs PC3
+\footnotesize
+```{r, fig.height=4}
+pc12plot <- ggplot(data = indVals, aes(x=PC1, y=PC3)) +
+   geom_point(aes(color = Species), alpha=0.5) +
+   geom_point(data=coords, aes(x=PC1, y=PC3)) +
+   geom_text(data = coords, aes(x=PC1, y=PC3,
+   label=feature),hjust=1, vjust=1) +
+   theme_bw()
+print(pc12plot)
+```
+
+
+# Plot PC2 vs PC4
+\footnotesize
+```{r, fig.height=4}
+pc24plot <- ggplot(data = indVals, aes(x=PC2, y=PC4)) +
+   geom_point(aes(color = Species), alpha=0.5) +
+   geom_point(data=coords, aes(x=PC2, y=PC4)) +
+   geom_text(data = coords, aes(x=PC2, y=PC4,
+   label=feature),hjust=1, vjust=1) +
+   theme_bw()
+print(pc24plot)
+```
