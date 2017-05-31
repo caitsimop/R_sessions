@@ -1,0 +1,65 @@
+---
+title: "ggplot2"
+author: "Caitlin Simopoulos"
+date: '2017-06-01'
+output:
+  beamer_presentation:
+    latex_engine: xelatex
+  ioslides_presentation: default
+subtitle: McMaster University
+header-includes:
+- \definecolor{Navy}{RGB}{3, 1, 44}
+- \definecolor{Purple}{RGB}{65, 34, 52}
+- \definecolor{PrettyGreen}{RGB}{47, 86, 75}
+- \definecolor{Pink}{RGB}{255, 105, 120}
+- \definecolor{OffWhite}{RGB}{255, 234, 208}
+- \colorlet{WhiteOffWhite}{OffWhite!95!white}
+- \definecolor{GreyWhite}{RGB}{255,234,208}
+- \definecolor{DarkPurple}{RGB}{51, 41, 56}
+- \definecolor{LightishPurple}{RGB}{109, 64, 87}
+- \definecolor{Pinky}{RGB}{229, 104, 97}
+- \definecolor{Robin}{RGB}{172, 229, 223}
+- \colorlet{DarkRobin}{Robin!80!black}
+- \colorlet{LightNavy}{Navy!50!white}
+- \setbeamercolor{title}{fg=DarkPurple}
+- \setbeamercolor{frametitle}{fg=white, bg=LightishPurple}
+- \setbeamercolor{normal text}{fg=DarkPurple}
+- \setbeamercolor{block title}{fg=white,bg=Pinky}
+- \setbeamercolor{block body}{fg=black,bg=Pinky!25!white}
+- \setbeamercolor{alerted text}{fg=Pinky}
+- \setbeamercolor{itemize item}{fg=DarkPurple}
+- \setbeamercolor{framesource}{fg=DarkRobin}
+- \setbeamercolor{section in toc}{fg=LightNavy}
+- \setbeamercolor{footnote}{fg=DarkPurple}
+- \setbeamercolor{footnote mark}{fg=DarkPurple}
+- \setbeamercolor{myfootlinetext}{fg=DarkPurple}
+- \setbeamertemplate{itemize subitem}{\color{DarkRobin}$\blacktriangleright$}
+- \setbeamertemplate{itemize subsubitem}{\color{DarkPurple}$\blacktriangleright$}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=Pinky}
+- \newcommand{\colbegin}{\begin{columns}}
+- \newcommand{\colend}{\end{columns}}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# ggplot2
+
+``ggplot2 is a plotting system for R, based on the grammar of graphics, which tries to take the good parts of base and lattice graphics and none of the bad parts. It takes care of many of the fiddly details that make plotting a hassle (like drawing legends) as well as providing a powerful model of graphics that makes it easy to produce complex multi-layered graphics.'' -Hadley Whickam
+
+# ggplot2 relies on the other `tidyverse' packages
+
+The tidyverse can be found at <tidyverse.org>.  
+Some other packages from the tidyverse you might find useful are:  
+- [dplyr](http://dplyr.tidyverse.org)
+- [tidyr](http://tidyr.tidyverse.org)
+
+But we are not here to learn the tidyverse or debate about how much we love and/or hate it...
+
+# Let's follow a blog post...
+
+We're going to follow through a blogpost about ggplot2 today...
+
+[An Introduction on How to Make Beautiful Charts With R and ggplot2](http://minimaxir.com/2015/02/ggplot-tutorial/)  
+By Max Woolfe

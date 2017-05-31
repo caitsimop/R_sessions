@@ -108,7 +108,7 @@ Like with an RNASeq project with data from 30,000 genes and 50 different samples
 # Let's do PCA instead
 \footnotesize
 ```{r, cache=TRUE}
-pca<- prcomp(iris[1:4], center=TRUE, scale=TRUE)  # PCA with centering and scaling
+pca<- prcomp(iris[,1:4], center=TRUE, scale=TRUE)  # PCA with centering and scaling
 pca$rotation  # The loadings are here
 summary(pca)
 ```
@@ -154,7 +154,7 @@ indVals <- cbind(indVals, Species= iris$Species)
 library(ggplot2)
 pc12plot <- ggplot(data = indVals, aes(x=PC1, y=PC2)) +
   geom_point(aes(color = Species), alpha=0.5) +
-  geom_segment(data=coords, aes(x=X, y=Y, xend=PC2, yend=PC4,
+  geom_segment(data=coords, aes(x=X, y=Y, xend=PC1, yend=PC2,
   colour=colnames(iris[1:4])), arrow=arrow(), size=1)  +
 theme_bw()     
 print(pc12plot)  
