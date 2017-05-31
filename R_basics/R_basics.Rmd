@@ -3,8 +3,8 @@ title: "Back to basics - R"
 author: "Caitlin Simopoulos"
 date: '2017-05-18'
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
