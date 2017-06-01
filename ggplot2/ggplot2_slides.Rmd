@@ -166,7 +166,8 @@ What if we wanted to:
 # Murder and assault distribution
 \footnotesize
 ```{r, fig.height=5.8, cache=TRUE}
-ggplot(subset(reshapedUS, variable == c("Murder", "Assault")), aes(x=value, colour = variable, fill = variable)) +
+ggplot(subset(reshapedUS, variable == c("Murder", "Assault")), 
+       aes(x=value, colour = variable, fill = variable)) +
   geom_histogram(bins=50, position="identity") 
 # try removing fill = variable
 ```
@@ -181,8 +182,10 @@ ggplot(subset(reshapedUS, variable == c("Murder", "Assault")), aes(x=value, colo
 # Changing colour example
 \footnotesize
 ```{r, fig.height=5.8, cache=TRUE}
-ggplot(subset(reshapedUS, variable == c("Murder", "Assault")), aes(x=value, fill = variable)) +
-  geom_histogram(bins=50, position="identity", colour = "black") +
+ggplot(subset(reshapedUS, variable == c("Murder", "Assault")), 
+       aes(x=value, fill = variable)) +
+  geom_histogram(bins=50, 
+                 position="identity", colour = "black") +
  # scale_color_manual(values=c("#6d4057", "#ace5df")) +
   scale_fill_manual(values=c("#6d4057", "#ace5df"))
 ```
@@ -194,7 +197,8 @@ ggplot(subset(reshapedUS, variable == c("Murder", "Assault")), aes(x=value, fill
 ggplot () + 
   geom_bar(data=subset(reshapedUS, variable == "Murder"), 
            aes(x= state, y= value), stat="identity") +
-  geom_line(data = subset(reshapedUS, variable == "UrbanPop"), aes(x=state, y=value, group=1)) +
+  geom_line(data = subset(reshapedUS, 
+    variable == "UrbanPop"), aes(x=state, y=value, group=1)) +
   theme(axis.text.x = element_text(angle = 45))
 ```
 
@@ -202,7 +206,8 @@ ggplot () +
 \tiny
 ```{r, cache=TRUE, fig.height=6}
 barchart <- ggplot () + 
-  geom_bar(data=subset(reshapedUS, variable != "UrbanPop"), 
+  geom_bar(data=subset(reshapedUS, 
+                       variable != "UrbanPop"), 
            aes(x= state, y= value, fill = variable),
            stat="identity") +
   theme(axis.text.x = element_text(angle = 45))
