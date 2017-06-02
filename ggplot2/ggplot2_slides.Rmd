@@ -181,7 +181,7 @@ ggplot(subset(reshapedUS, variable == c("Murder", "Assault")),
 
 # Changing colour example
 \footnotesize
-```{r, fig.height=5.8, cache=TRUE}
+```{r, fig.height=4, cache=TRUE}
 ggplot(subset(reshapedUS, variable == c("Murder", "Assault")), 
        aes(x=value, fill = variable)) +
   geom_histogram(bins=50, 
